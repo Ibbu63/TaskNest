@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animated To-Do List</title>
+  <link rel="stylesheet" href="sty.css" />
+</head>
+<body>
+  <!-- App Bar -->
+  <div class="app-bar">
+    <h1>Kaam Karo</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Container for All Task Cards -->
+  <div class="container">
+    <!-- Add New Task Card -->
+    <div class="card" id="addCard">
+      <div class="card-info">
+        <p class="title">+</p>
+      </div>
+    </div>
+
+    <!-- Example Task Card (can be removed) -->
+    <div class="card example-card">
+      <div class="card-info">
+        <h3 class="card-title">Task Title</h3>
+        <p class="card-details">Your task description...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add / Edit Task Popup -->
+  <div class="overlay hidden" id="overlay">
+    <div class="task-popup">
+      <button id="closeBtn" class="close-btn" aria-label="Close">←</button>
+
+      <!-- NEW: title input -->
+      <input id="taskTitleInput" type="text" placeholder="Enter task title..." />
+
+      <textarea id="taskInput" placeholder="Enter your task description..."></textarea>
+
+      <button id="addTaskBtn" class="primary-btn">Add Task</button>
+    </div>
+  </div>
+
+  <!-- Fullscreen Read-Only Overlay -->
+  <div class="readonly-overlay" id="readonlyOverlay">
+    <div class="readonly-content">
+      <button class="close-readonly" onclick="closeReadonly()">✖</button>
+      <h2 id="readonlyTitle"></h2>
+      <p id="readonlyText"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

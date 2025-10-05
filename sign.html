@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign Up</title>
+<style>
+body {
+  font-family: Poppins, sans-serif;
+  background: #0f0f0f;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: #181818;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 10px #f7ba2b;
+}
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+button {
+  background: linear-gradient(to right, #f7ba2b, #ea5358);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Sign Up</h2>
+  <input type="text" id="name" placeholder="Enter your name" required><br>
+  <input type="email" id="email" placeholder="Enter your Gmail" required><br>
+  <input type="password" id="password" placeholder="Enter password" required><br>
+  <button onclick="signup()">Sign Up</button>
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+
+<script>
+function signup() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!name || !email || !password) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  // Save user in localStorage
+  const users = JSON.parse(localStorage.getItem("users")) || {};
+  if(users[email]) {
+    alert("User already exists!");
+    return;
+  }
+
+  users[email] = { name, password, tasks: [] };
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("currentUser", email);
+  alert("Account created successfully!");
+  window.location.href = "todo.html"; // redirect to your To-Do app
+}
+</script>
+</body>
+</html>
