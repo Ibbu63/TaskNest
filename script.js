@@ -12,12 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const readonlyTitle = document.getElementById('readonlyTitle');
   const readonlyText = document.getElementById('readonlyText');
 
-  // --- CREATE EDIT OVERLAY ---
+  // --- CREATE FULLSCREEN EDIT OVERLAY ---
   const editOverlay = document.createElement('div');
   editOverlay.className = 'edit-overlay hidden';
   editOverlay.innerHTML = `
     <div class="edit-content">
       <button class="close-edit">&times;</button>
+      <h2>Edit Task</h2>
       <input type="text" class="edit-title" placeholder="Task Title">
       <textarea class="edit-text" placeholder="Task Details"></textarea>
       <button class="save-btn">Save</button>
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.add('hidden');
   });
 
-  // --- CREATE TASK CARD ---
+  // --- CREATE CARD ---
   function createTaskCard(title, text) {
     const card = document.createElement('div');
     card.className = 'card';
@@ -73,6 +74,21 @@ document.addEventListener('DOMContentLoaded', () => {
     info.appendChild(h3);
     info.appendChild(p);
     card.appendChild(info);
+
+// --- Inside createTaskCard function ---
+  const tickBtn = document.createElement('button');
+  tickBtn.className = 'card-tick';
+  tickBtn.innerText = '✔';
+  card.appendChild(tickBtn);
+
+  tickBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent opening read-only
+    card.remove();       // remove completed task
+  });
+// Add tick button to add-task popup only once
+
+
+
 
     // --- THREE DOT MENU ---
     const menu = document.createElement('div');
@@ -106,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.insertBefore(card, addCard.nextSibling);
 
-    // Click card to open read-only
     card.addEventListener('click', () => openReadonly(h3.innerText, p.innerText));
   }
 
@@ -115,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     readonlyTitle.innerText = title;
     readonlyText.innerText = text;
     readonlyOverlay.classList.add('active');
+    readonlyText.className = 'readonly-text'; // golden border
   }
 
   window.closeReadonly = function () {

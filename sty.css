@@ -93,7 +93,8 @@ body {
 
 /* Title inside card */
 .card-title {
-  font-size: 1.1rem;
+  font-size: 2.5rem;
+  font-weight: bold;
   margin-bottom: 10px;
   color: #f7ba2b;
   text-align: center;
@@ -101,11 +102,7 @@ body {
 
 /* Details text */
 .card-details {
-  font-size: 0.95rem;
-  color: #fff;
-  text-align: center;
-  width: 85%;
-  word-wrap: break-word;
+  display: none;
 }
 
 /* Add card big plus */
@@ -203,7 +200,7 @@ body {
 }
 
 
-/* Read-only / Edit overlay container */
+/* Read-only overlay */
 .readonly-overlay,
 .edit-overlay {
   position: fixed;
@@ -214,7 +211,8 @@ body {
   background: rgba(24, 24, 24, 0.95);
   display: none;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 40px;
   z-index: 100;
 }
 
@@ -223,22 +221,24 @@ body {
   display: flex;
 }
 
-/* Read-only content box */
+/* Fullscreen content box */
 .readonly-content,
 .edit-content {
   background: #222;
   width: 90%;
-  max-width: 700px;
-  padding: 30px;
+  max-width: 800px;
+  height: 90vh;
+  padding: 20px 30px;
   border-radius: 20px;
   box-shadow: 0 0 30px rgba(247, 186, 43, 0.4);
   position: relative;
   color: #f7ba2b;
-  text-align: center;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Title for both read-only & edit */
+/* Title at top center */
 .readonly-content h2,
 .edit-content h2 {
   text-align: center;
@@ -247,35 +247,57 @@ body {
   color: #f7ba2b;
 }
 
-/* Content container in read-only */
+/* Content container with golden border */
 .readonly-text,
 .edit-text-container {
-  background: linear-gradient(90deg, #f7ba2b 0%, #ea5358 100%);
-  color: #181818;
-  padding: 20px;
+  flex: 1;
+  width: 100%;
+  background: #181818;
+  border: 3px solid #f7ba2b;
   border-radius: 15px;
-  text-align: left;
-  font-size: 1rem;
-  max-height: 60vh;
+  padding: 20px;
   overflow-y: auto;
+  font-size: 1rem;
+  text-align: left;
+  color: #fff;
 }
 
-/* Edit inputs for full screen editing */
-.edit-content input[type="text"],
-.edit-content textarea {
+/* Edit input styling */
+.edit-content input[type="text"] {
   width: 100%;
   padding: 12px;
   margin-bottom: 15px;
   border-radius: 12px;
-  border: 2px solid #f7ba2b;
+  border: 3px solid #f7ba2b;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.edit-content textarea.edit-text {
+  width: 100%;
+  flex: 1;
+  min-height: 60%;       /* fill most of overlay */
+  max-height: 70%;       /* limit height */
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 3px solid #f7ba2b;
   background: #111;
   color: #fff;
   font-size: 1rem;
   outline: none;
   resize: vertical;
+  overflow-y: auto;
 }
 
-/* Save button in edit overlay */
+/* Auto expand textarea */
+.edit-text:focus {
+  overflow-y: auto;
+}
+
+/* Save button for edit mode */
 .edit-content .save-btn {
   background: linear-gradient(90deg, #f7ba2b, #ea5358);
   color: #181818;
@@ -289,11 +311,11 @@ body {
 
 .edit-content .save-btn:hover { transform: scale(1.05); }
 
-/* Close button (for both read-only & edit) */
+/* Close buttons */
 .close-readonly,
 .close-edit {
   position: absolute;
-  top: 18px;
+  top: 15px;
   right: 20px;
   background: transparent;
   border: none;
@@ -301,7 +323,6 @@ body {
   font-size: 1.8rem;
   cursor: pointer;
 }
-
 
 /* Three-dot menu */
 .card-menu {
@@ -363,4 +384,31 @@ body {
   font-weight: bold;
   margin-top: 5px;
   width: 100%;
+}
+
+/* Tick button on card */
+.card-tick {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(90deg, #f7ba2b, #ea5358);
+  color: #181818;
+  font-weight: bold;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  z-index: 2;
+  transition: transform 0.2s;
+}
+.card-tick:hover {
+  transform: scale(1.2);
+}
+
+/* Tick button for add-task overlay */
+#overlay .tick-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
 }
