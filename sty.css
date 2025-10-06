@@ -13,30 +13,29 @@ body {
   align-items: center;
 }
 
-/* App Bar */
+/* App Bar: title centered, logout on right */
 .app-bar {
-  position: relative;          /* allows absolute positioning of logout button */
+  position: relative;
   width: 100%;
   padding: 15px 20px;
   background: linear-gradient(90deg, #ea5358, #f7ba2b);
   color: #181818;
   font-weight: bold;
   letter-spacing: 1px;
-  text-align: center;          /* centers the title */
+  text-align: center;
 }
 
-/* Title centered */
 .app-bar h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
 }
 
-/* Logout Button on right */
+/* Logout Button positioned on the right */
 .logout-btn {
   position: absolute;
-  right: 20px;                /* 20px from right edge */
+  right: 20px;
   top: 50%;
-  transform: translateY(-50%); /* vertically center */
+  transform: translateY(-50%);
   background-color: #181818;
   color: #f7ba2b;
   border: none;
@@ -46,12 +45,7 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
-.logout-btn:hover {
-  background-color: black;
-}
-
-
+.logout-btn:hover { background-color: black; }
 
 /* Container for Cards */
 .container {
@@ -62,8 +56,7 @@ body {
   margin-top: 40px;
 }
 
-
-/* Uiverse Gradient Card */
+/* Card Base */
 .card {
   --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
   width: 190px;
@@ -76,9 +69,8 @@ body {
   z-index: 1;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: none; /* no glow normally */
+  box-shadow: none;
 }
-
 
 .card:hover {
   transform: scale(1.05);
@@ -90,46 +82,40 @@ body {
   background: var(--color);
   color: #f7ba2b;
   display: flex;
-  flex-direction: column; /* to allow title + content */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
   border-radius: 0.7rem;
+  padding: 18px;
 }
 
-
-.card .title {
-  font-size: 3rem;
-  font-weight: bold;
-  letter-spacing: 0.1em;
-}
-
-/* Hover Glow */
-.card:hover::before {
-  opacity: 0;
-}
-.card:hover .card-info {
-  color: #ffeb3b; /* lighter shade on hover */
-}
-
-
+/* Title inside card */
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   margin-bottom: 10px;
   color: #f7ba2b;
+  text-align: center;
 }
 
+/* Details text */
 .card-details {
   font-size: 0.95rem;
   color: #fff;
   text-align: center;
   width: 85%;
+  word-wrap: break-word;
 }
 
+/* Add card big plus */
+.title {
+  font-size: 2.4rem;
+  color: #f7ba2b;
+  font-weight: 700;
+}
 
-
-/* Overlay Popup */
+/* Overlay (add/edit popup) */
 .overlay {
   position: fixed;
   top: 0;
@@ -146,32 +132,49 @@ body {
   transition: opacity 0.4s ease;
 }
 
+.overlay.hidden { display: none; }
+
 .overlay.active {
   opacity: 1;
   pointer-events: auto;
 }
 
+/* Task popup */
 .task-popup {
   position: relative;
   background: #222;
-  width: 50vw; /* half screen width */
+  width: 90%;
   max-width: 500px;
-  padding: 30px 40px; /* extra top padding for arrow */
+  padding: 30px 40px;
   border-radius: 16px;
   text-align: center;
-  animation: popupZoom 0.4s ease forwards;
   box-shadow: 0 0 20px rgba(247, 186, 43, 0.25);
 }
 
-@keyframes popupZoom {
-  from {
-    transform: scale(0.6) translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
+.task-popup input[type="text"] {
+  width: 85%;
+  padding: 12px;
+  border: 2px solid #f7ba2b;
+  border-radius: 8px;
+  margin-top: 10px;
+  outline: none;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.task-popup textarea {
+  width: 85%;
+  min-height: 120px;
+  padding: 12px;
+  border: 2px solid #f7ba2b;
+  border-radius: 8px;
+  margin-top: 10px;
+  outline: none;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  resize: vertical;
 }
 
 .task-popup .primary-btn {
@@ -187,82 +190,22 @@ body {
 }
 .task-popup .primary-btn:hover { transform: scale(1.05); }
 
-
-.task-popup textarea {
-  width: 85%;
-  min-height: 120px; /* allows multiline */
-  padding: 12px;
-  border: 2px solid #f7ba2b;
-  border-radius: 8px;
-  margin-top: 10px;
-  outline: none;
-  background: #111;
-  color: #fff;
-  font-size: 1rem;
-  resize: vertical; /* allows user to expand height */
-}
-
-
-/* Close button */
 .close-btn {
   position: absolute;
   top: 15px;
   left: 15px;
-  font-size: 2rem;
+  font-size: 1.8rem;
   background: transparent;
   border: none;
   color: #f7ba2b;
   cursor: pointer;
   z-index: 2;
-  margin-top: 25px;
-}
-
-/* Three-dot Menu */
-.menu {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  color: #f7ba2b;
-  font-size: 1.8rem; /* bigger dots */
-  opacity: 0.8; /* slightly visible */
-  transition: transform 0.2s, opacity 0.3s;
-}
-
-.menu:hover {
-  transform: scale(1.2);
-  opacity: 1;
 }
 
 
-.menu-options {
-  position: absolute;
-  top: 30px;
-  right: 10px;
-  background: #222;
-  border-radius: 8px;
-  display: none;
-  flex-direction: column;
-  min-width: 100px;
-}
-
-.menu-options button {
-  background: transparent;
-  border: none;
-  color: white;
-  padding: 8px;
-  text-align: left;
-  cursor: pointer;
-}
-
-.menu-options button:hover {
-  background: #333;
-}
-
-
-
-/* Readonly Overlay */
-.readonly-overlay {
+/* Read-only / Edit overlay container */
+.readonly-overlay,
+.edit-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -275,29 +218,149 @@ body {
   z-index: 100;
 }
 
-.readonly-overlay.active {
+.readonly-overlay.active,
+.edit-overlay.active {
   display: flex;
 }
 
-.readonly-content {
+/* Read-only content box */
+.readonly-content,
+.edit-content {
   background: #222;
-  color: #f7ba2b;
   width: 90%;
-  max-width: 600px;
+  max-width: 700px;
   padding: 30px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 0 25px rgba(247, 186, 43, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(247, 186, 43, 0.4);
   position: relative;
+  color: #f7ba2b;
+  text-align: center;
+  overflow: auto;
 }
 
-.close-readonly {
+/* Title for both read-only & edit */
+.readonly-content h2,
+.edit-content h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #f7ba2b;
+}
+
+/* Content container in read-only */
+.readonly-text,
+.edit-text-container {
+  background: linear-gradient(90deg, #f7ba2b 0%, #ea5358 100%);
+  color: #181818;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: left;
+  font-size: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Edit inputs for full screen editing */
+.edit-content input[type="text"],
+.edit-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 2px solid #f7ba2b;
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  resize: vertical;
+}
+
+/* Save button in edit overlay */
+.edit-content .save-btn {
+  background: linear-gradient(90deg, #f7ba2b, #ea5358);
+  color: #181818;
+  font-weight: bold;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.edit-content .save-btn:hover { transform: scale(1.05); }
+
+/* Close button (for both read-only & edit) */
+.close-readonly,
+.close-edit {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 18px;
+  right: 20px;
   background: transparent;
   border: none;
   color: #f7ba2b;
   font-size: 1.8rem;
   cursor: pointer;
+}
+
+
+/* Three-dot menu */
+.card-menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+  color: #f7ba2b;
+  z-index: 5;
+}
+
+.menu-options {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  background: #f7ba2b;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.menu-options div {
+  padding: 5px 12px;
+  cursor: pointer;
+  color: #181818;
+  font-weight: bold;
+}
+
+.menu-options div:hover {
+  background-color: #ddd;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Edit input inside card */
+.edit-title-input,
+.edit-text-input {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #f7ba2b;
+  background: #111;
+  color: #fff;
+}
+
+.save-btn {
+  padding: 5px 10px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #f7ba2b, #ea5358);
+  border: none;
+  color: #181818;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 5px;
+  width: 100%;
 }

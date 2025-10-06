@@ -1,150 +1,145 @@
-const addCard = document.getElementById("addCard");
-const overlay = document.getElementById("overlay");
-const closeBtn = document.getElementById("closeBtn");
-const addTaskBtn = document.getElementById("addTaskBtn");
-const taskInput = document.getElementById("taskInput");
-const container = document.querySelector(".container");
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.container');
+  const addCard = document.getElementById('addCard');
 
-let editingCard = null;
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+  const addTaskBtn = document.getElementById('addTaskBtn');
+  const taskInput = document.getElementById('taskInput');
+  const taskTitleInput = document.getElementById('taskTitleInput');
 
-// 🟢 Load tasks from localStorage on startup
-window.addEventListener("load", loadTasks);
+  const readonlyOverlay = document.getElementById('readonlyOverlay');
+  const readonlyTitle = document.getElementById('readonlyTitle');
+  const readonlyText = document.getElementById('readonlyText');
 
-// Open popup to add task
-addCard.addEventListener("click", () => {
-  overlay.classList.add("active");
-  taskInput.value = "";
-  addTaskBtn.textContent = "Add Task";
-  editingCard = null;
-});
-
-// Close popup
-closeBtn.addEventListener("click", () => {
-  overlay.classList.remove("active");
-  taskInput.value = "";
-  editingCard = null;
-});
-
-// Add or Save Task
-addTaskBtn.addEventListener("click", () => {
-  const task = taskInput.value.trim();
-  if (!task) return alert("Enter a task!");
-
-  if (editingCard) {
-    // Update existing task
-    editingCard.querySelector(".task-text").textContent = task;
-    saveTasks();
-    editingCard = null;
-    overlay.classList.remove("active");
-    taskInput.value = "";
-    addTaskBtn.textContent = "Add Task";
-    return;
-  }
-
-  // Create new task
-  overlay.classList.remove("active");
-  const newCard = createTaskCard(task);
-  container.insertBefore(newCard, addCard);
-  saveTasks(); // Save to localStorage
-  taskInput.value = "";
-});
-
-// 🟢 Create card element function
-function createTaskCard(taskText) {
-  const newCard = document.createElement("div");
-  newCard.className = "card";
-  newCard.innerHTML = `
-    <div class="card-info">
-      <span class="menu">⋮</span>
-      <p class="task-text">${taskText}</p>
-      <div class="menu-options">
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
-      </div>
+  // --- CREATE EDIT OVERLAY ---
+  const editOverlay = document.createElement('div');
+  editOverlay.className = 'edit-overlay hidden';
+  editOverlay.innerHTML = `
+    <div class="edit-content">
+      <button class="close-edit">&times;</button>
+      <input type="text" class="edit-title" placeholder="Task Title">
+      <textarea class="edit-text" placeholder="Task Details"></textarea>
+      <button class="save-btn">Save</button>
     </div>
   `;
+  document.body.appendChild(editOverlay);
 
-  // Menu toggle
-  const menu = newCard.querySelector(".menu");
-  const menuOptions = newCard.querySelector(".menu-options");
+  const editTitleInput = editOverlay.querySelector('.edit-title');
+  const editTextInput = editOverlay.querySelector('.edit-text');
+  const editSaveBtn = editOverlay.querySelector('.save-btn');
+  const editCloseBtn = editOverlay.querySelector('.close-edit');
 
-  menu.addEventListener("click", (e) => {
-    e.stopPropagation();
-    menuOptions.style.display =
-      menuOptions.style.display === "flex" ? "none" : "flex";
+  editCloseBtn.addEventListener('click', () => editOverlay.classList.remove('active'));
+
+  // --- OPEN ADD POPUP ---
+  addCard.addEventListener('click', () => {
+    overlay.classList.remove('hidden');
+    overlay.classList.add('active');
+    taskTitleInput.value = '';
+    taskInput.value = '';
+    taskTitleInput.focus();
   });
 
-  // Edit button
-  newCard.querySelector(".edit-btn").addEventListener("click", () => {
-    editingCard = newCard;
-    const oldText = newCard.querySelector(".task-text").textContent;
-    taskInput.value = oldText;
-    addTaskBtn.textContent = "Save Changes";
-    overlay.classList.add("active");
-    menuOptions.style.display = "none";
+  closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('active');
+    overlay.classList.add('hidden');
   });
 
-  // Delete button
-  newCard.querySelector(".delete-btn").addEventListener("click", () => {
-    newCard.remove();
-    saveTasks();
+  addTaskBtn.addEventListener('click', () => {
+    const title = taskTitleInput.value.trim() || 'Untitled Task';
+    const text = taskInput.value.trim() || 'No details provided.';
+    createTaskCard(title, text);
+    overlay.classList.remove('active');
+    overlay.classList.add('hidden');
   });
 
-  return newCard;
-}
+  // --- CREATE TASK CARD ---
+  function createTaskCard(title, text) {
+    const card = document.createElement('div');
+    card.className = 'card';
 
-// 🟢 Save all tasks to localStorage
-function saveTasks() {
-  const tasks = [];
-  document.querySelectorAll(".task-text").forEach((el) => {
-    tasks.push(el.textContent);
-  });
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+    const info = document.createElement('div');
+    info.className = 'card-info';
 
-// 🟢 Load tasks from localStorage
-function loadTasks() {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks.forEach((taskText) => {
-    const card = createTaskCard(taskText);
-    container.insertBefore(card, addCard);
-  });
-}
+    const h3 = document.createElement('h3');
+    h3.className = 'card-title';
+    h3.innerText = title;
 
-const currentUser = localStorage.getItem("currentUser");
-if (!currentUser) {
-  window.location.href = "login.html";
-}
+    const p = document.createElement('p');
+    p.className = 'card-details';
+    p.innerText = text;
 
-let users = JSON.parse(localStorage.getItem("users")) || {};
-let user = users[currentUser];
+    info.appendChild(h3);
+    info.appendChild(p);
+    card.appendChild(info);
 
-function saveTasks() {
-  users[currentUser].tasks = tasks;
-  localStorage.setItem("users", JSON.stringify(users));
-}
+    // --- THREE DOT MENU ---
+    const menu = document.createElement('div');
+    menu.className = 'card-menu';
+    menu.innerHTML = '&#8942;';
+    card.appendChild(menu);
 
-function logout() {
-  localStorage.removeItem("currentUser");
-  window.location.href = "login.html";
-}
+    const menuOptions = document.createElement('div');
+    menuOptions.className = 'menu-options hidden';
+    menuOptions.innerHTML = `
+      <div class="edit-option">Edit</div>
+      <div class="delete-option">Delete</div>
+    `;
+    card.appendChild(menuOptions);
 
+    menu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuOptions.classList.toggle('hidden');
+    });
 
-function openReadonly(title, text) {
-  document.getElementById("readonlyTitle").innerText = title;
-  document.getElementById("readonlyText").innerText = text;
-  document.getElementById("readonlyOverlay").classList.add("active");
-}
+    menuOptions.querySelector('.delete-option').addEventListener('click', (e) => {
+      e.stopPropagation();
+      card.remove();
+    });
 
-function closeReadonly() {
-  document.getElementById("readonlyOverlay").classList.remove("active");
-}
+    menuOptions.querySelector('.edit-option').addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuOptions.classList.add('hidden');
+      openEdit(card);
+    });
 
-/* Example: attach click event to task cards */
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('click', () => {
-    const title = card.querySelector('.card-title')?.innerText || "Untitled Task";
-    const text = card.querySelector('.card-details')?.innerText || "No details available.";
-    openReadonly(title, text);
-  });
+    container.insertBefore(card, addCard.nextSibling);
+
+    // Click card to open read-only
+    card.addEventListener('click', () => openReadonly(h3.innerText, p.innerText));
+  }
+
+  // --- OPEN READONLY ---
+  function openReadonly(title, text) {
+    readonlyTitle.innerText = title;
+    readonlyText.innerText = text;
+    readonlyOverlay.classList.add('active');
+  }
+
+  window.closeReadonly = function () {
+    readonlyOverlay.classList.remove('active');
+  };
+
+  // --- OPEN FULLSCREEN EDIT ---
+  function openEdit(card) {
+    const title = card.querySelector('.card-title').innerText;
+    const text = card.querySelector('.card-details').innerText;
+
+    editTitleInput.value = title;
+    editTextInput.value = text;
+
+    editOverlay.classList.add('active');
+
+    editSaveBtn.onclick = () => {
+      card.querySelector('.card-title').innerText = editTitleInput.value || 'Untitled Task';
+      card.querySelector('.card-details').innerText = editTextInput.value || 'No details provided.';
+      editOverlay.classList.remove('active');
+    };
+  }
+
+  // --- LOGOUT ---
+  window.logout = function () {
+    window.location.href = "index.html";
+  };
 });
