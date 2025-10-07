@@ -201,6 +201,108 @@ body {
 
 
 /* Read-only overlay */
+
+/* Read-only subtasks container */
+.readonly-text {
+  width: 100%;
+  flex: 1;
+  background: #181818;
+  border: 3px solid #f7ba2b;
+  border-radius: 15px;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual readonly subtask */
+.readonly-subtask {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f7ba2b;
+  padding: 8px 10px;
+  font-size: 1.2rem; /* medium size */
+  color: #fff;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+/* Tick button on readonly subtask */
+.readonly-subtask .tick-btn {
+  background: linear-gradient(90deg, #f7ba2b, #ea5358);
+  color: #181818;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+.readonly-subtask .tick-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Fade-out animation */
+.readonly-subtask.fade-out {
+  opacity: 0;
+  transform: translateX(50px);
+  height: 0;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+
+/* Individual readonly subtask */
+.readonly-subtask {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f7ba2b;
+  padding: 8px 10px;
+  font-size: 1.2rem; /* medium font */
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Tick button on readonly subtask */
+.readonly-subtask .tick-btn {
+  background: linear-gradient(90deg, #f7ba2b, #ea5358);
+  color: #181818;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.readonly-subtask .tick-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Fade-out animation for removing task */
+.readonly-subtask.fade-out {
+  opacity: 0;
+  transform: translateX(50px);
+  height: 0;
+  margin: 0;
+  padding: 0;
+  transition: all 0.4s ease;
+}
+
+
 .readonly-overlay,
 .edit-overlay {
   position: fixed;
@@ -220,6 +322,18 @@ body {
 .edit-overlay.active {
   display: flex;
 }
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f7ba2b;
+  pointer-events: none;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  z-index: 100;
+}
+
 
 /* Fullscreen content box */
 .readonly-content,
@@ -411,4 +525,102 @@ body {
   position: absolute;
   top: 15px;
   left: 15px;
+}
+
+/* Subtask container inside popup */
+#subtaskContainer,
+.edit-subtask-container {
+  width: 85%;
+  min-height: 220px;
+  max-height: 400px;
+  margin: 15px auto 0 auto;
+  padding: 50px 12px 12px 12px; /* extra top padding for + button */
+  border: 2px solid #f7ba2b;
+  border-radius: 8px;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow-y: auto;
+}
+
+/* Add subtask button inside container */
+#addSubtaskBtn,
+.edit-add-subtask-btn {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #f7ba2b, #ea5358);
+  color: #181818;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Individual subtask line */
+.subtask {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Subtask input */
+.subtask input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #f7ba2b;
+  background: #222;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Remove button */
+/* Subtask remove button (X) */
+.subtask button,
+.edit-subtask-container .subtask button,
+.readonly-subtask .tick-btn {
+  background: #181818;           /* dark background */
+  color: #f7ba2b;               /* golden text */
+  border: 2px solid #f7ba2b;    /* golden border */
+  border-radius: 50%;            /* circular button */
+  width: 24px;
+  height: 24px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.subtask button:hover,
+.edit-subtask-container .subtask button:hover,
+.readonly-subtask .tick-btn:hover {
+  background: #f7ba2b;           /* golden on hover */
+  color: #181818;                /* dark text on hover */
+  transform: scale(1.2);         /* subtle pop effect */
+  box-shadow: 0 0 10px #f7ba2b;
+}
+
+/* Adjust tick button in readonly overlay */
+.readonly-subtask .tick-btn {
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  font-weight: bold;
 }
