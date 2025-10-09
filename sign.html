@@ -2,40 +2,96 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign Up</title>
 <style>
 body {
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
   background: #0f0f0f;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
+
 .container {
   background: #181818;
-  padding: 30px;
+  padding: 30px 25px;
   border-radius: 15px;
   text-align: center;
-  width: 300px;
+  width: 90%;
+  max-width: 360px;
   box-shadow: 0 0 10px #f7ba2b;
 }
+
+h2 {
+  margin-bottom: 20px;
+  color: #f7ba2b;
+  font-size: 1.6rem;
+}
+
 input {
-  width: 90%;
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   margin: 10px 0;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
 }
+
+input:focus {
+  box-shadow: 0 0 5px #f7ba2b;
+}
+
 button {
   background: linear-gradient(to right, #f7ba2b, #ea5358);
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px 25px;
+  border-radius: 8px;
   color: black;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(247, 186, 43, 0.5);
+}
+
+p {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+a {
+  color: #f7ba2b;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .container {
+    padding: 25px 20px;
+    width: 90%;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+  input, button {
+    font-size: 0.95rem;
+  }
 }
 </style>
 </head>
@@ -60,7 +116,6 @@ function signup() {
     return;
   }
 
-  // Save user in localStorage
   const users = JSON.parse(localStorage.getItem("users")) || {};
   if(users[email]) {
     alert("User already exists!");
@@ -71,7 +126,7 @@ function signup() {
   localStorage.setItem("users", JSON.stringify(users));
   localStorage.setItem("currentUser", email);
   alert("Account created successfully!");
-  window.location.href = "todo.html"; // redirect to your To-Do app
+  window.location.href = "todo.html";
 }
 </script>
 </body>
