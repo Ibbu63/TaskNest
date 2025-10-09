@@ -19,46 +19,48 @@ body {
 
 .container {
   background: #181818;
-  padding: 30px 25px;
+  padding: 25px 20px;
   border-radius: 15px;
   text-align: center;
   width: 90%;
-  max-width: 360px;
-  box-shadow: 0 0 10px #f7ba2b;
+  max-width: 350px;
+  box-shadow: 0 0 12px #f7ba2b;
+  box-sizing: border-box;
 }
 
 h2 {
-  margin-bottom: 20px;
   color: #f7ba2b;
-  font-size: 1.6rem;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
 }
 
 input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
+  margin: 8px 0;
+  border: 1px solid #333;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
-input:focus {
-  box-shadow: 0 0 5px #f7ba2b;
+input::placeholder {
+  color: #aaa;
 }
 
 button {
   background: linear-gradient(to right, #f7ba2b, #ea5358);
   border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
+  padding: 12px;
+  border-radius: 6px;
   color: black;
   font-weight: 600;
-  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   width: 100%;
-  margin-top: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 button:hover {
@@ -69,6 +71,7 @@ button:hover {
 p {
   margin-top: 15px;
   font-size: 0.9rem;
+  color: #ccc;
 }
 
 a {
@@ -80,17 +83,20 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Mobile adjustments */
+/* --- Responsive Adjustments --- */
 @media (max-width: 480px) {
-  .container {
-    padding: 25px 20px;
-    width: 90%;
-  }
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
-  input, button {
-    font-size: 0.95rem;
+
+  .container {
+    padding: 20px 15px;
+    width: 95%;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 0.9rem;
   }
 }
 </style>
@@ -111,13 +117,13 @@ function signup() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
-  if(!name || !email || !password) {
+  if (!name || !email || !password) {
     alert("Please fill all fields");
     return;
   }
 
   const users = JSON.parse(localStorage.getItem("users")) || {};
-  if(users[email]) {
+  if (users[email]) {
     alert("User already exists!");
     return;
   }
@@ -126,7 +132,7 @@ function signup() {
   localStorage.setItem("users", JSON.stringify(users));
   localStorage.setItem("currentUser", email);
   alert("Account created successfully!");
-  window.location.href = "todo.html";
+  window.location.href = "todo.html"; // redirect to your To-Do app
 }
 </script>
 </body>
