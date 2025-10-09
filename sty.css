@@ -624,3 +624,31 @@ body {
   font-size: 16px;
   font-weight: bold;
 }
+
+/* Edit Save Button */
+.edit-save-btn {
+  background: linear-gradient(135deg, #f7ba2b, #ea5358);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(247, 186, 43, 0.4);
+}
+
+.edit-save-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(247, 186, 43, 0.8);
+}
+
+.edit-save-btn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+
