@@ -630,25 +630,27 @@ body {
   background: linear-gradient(135deg, #f7ba2b, #ea5358);
   color: #fff;
   border: none;
-  padding: 10px 22px;
-  font-size: 15px;
+  padding: 8px 16px;
+  font-size: 14px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 15px;
-  width: 100%;
+  margin-top: 12px;
+  width: fit-content;
+  align-self: center;
   transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(247, 186, 43, 0.4);
+  box-shadow: 0 0 8px rgba(247, 186, 43, 0.4);
 }
 
 .edit-save-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(247, 186, 43, 0.8);
+  box-shadow: 0 0 15px rgba(247, 186, 43, 0.7);
 }
 
 .edit-save-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
   opacity: 0.9;
 }
+
 
 
